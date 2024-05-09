@@ -49,7 +49,7 @@ const TodoTemplate = () => {
     const newTodo = {
       id: makeNewId(),
       title: todoText,
-      done: false,
+      done: true,
     }; //나중에는 fetch를 이용해서 백엔드에 insert 요청을 보내야 함
 
     // todos.push(newTodo) -> (x) useState 변수는 setter로 변경해야 변화가 감지된다!
@@ -70,10 +70,38 @@ const TodoTemplate = () => {
     );
   };
 
+  // 할 일 체크 처리 함수
+  const checkTodo = (id) => {
+    // for문을 돌려서 작성한 케이스
+    // const copyTodos = [...todos];
+    // for (let cTodo of copyTodos) {
+    //   if (cTodo.id === id) {
+    //     cTodo.done = !cTodo.done;
+    //   }
+    // }
+    // setTodos(copyTodos);
+
+    // map 배열 고차 함수로 작성한 케이스
+    setTodos(
+      todos.map((todo) => {
+        return todo.id === id ? { ...todo, done: !todo.done } : { ...todo };
+        // if (todo.id === id) {
+        //   todo.done = !todo.done;
+        // }
+        // return todo;
+      }),
+    );
+  };
+
+  // 체크 안 된 할 일 갯수를 카운트 하는 함수
+  const countRestTodo = () => {
+    return todos.filter((todo) => todo.done).length;
+  };
+
   return (
     <div className="TodoTemplate">
-      <TodoHeader />
-      <TodoMain todoList={todos} remove={removeTodo} />
+      <TodoHeader count={countRestTodo} />
+      <TodoMain todoList={todos} remove={removeTodo} check={checkTodo} />
       <TodoInput addTodo={addTodo} />
     </div>
   );
