@@ -36,3 +36,16 @@ $ npm install
    $ npm install @mui/icons-material
    $ npm install react-router-dom // 다른 html 페이지로 넘어가는 것처럼 보여주는 라우터
 ```
+
+## 리액트 라우터 설정
+
+- index.js에 BrowserRouter 컴포넌트로 App 감싸기.
+
+```javascript
+const root = ReactDOM.createRoot(document.getElementById('root'));
+root.render(
+  <BrowserRouter>
+    <App />
+  </BrowserRouter>
+);
+```
