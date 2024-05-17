@@ -18,7 +18,9 @@ const TodoHeader = ({ count }) => {
     <header>
       <h1>{dateString}</h1>
       <div className="day">{dayName}</div>
-      <div className="tasks-left">할 일 {count()}개 남음</div>
+      <div className="tasks-left">
+        {count() ? `할일 ${count()}개 있음` : '할일 없음'}
+      </div>
     </header>
   );
 };
