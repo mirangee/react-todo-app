@@ -135,6 +135,56 @@ const Join = () => {
     });
   };
 
+  // 패스워드 입력창 체인지 이벤트 핸들러
+  const passwordHandler = (e) => {
+    const pwRegex =
+      /^(?=.*[A-Za-z])(?=.*\d)(?=.*[$@$!%*#?&])[A-Za-z\d$@$!%*#?&]{8,20}$/;
+    const inputValue = e.target.value;
+
+    let msg = '';
+    let flag = false;
+
+    if (!pwRegex.test(inputValue)) {
+      msg = '영문, 숫자, 특수문자 조합의 8~20자로 입력해주세요.';
+    } else {
+      msg = '사용 가능한 패스워드입니다.';
+      flag = true;
+    }
+
+    // 상태값 변경 저장
+    saveInputState({
+      key: 'password',
+      inputValue,
+      msg,
+      flag,
+    });
+  };
+
+  // 패스워드 중복 확인창 체인지 이벤트 핸들러
+  const passwordCheckHandler = (e) => {
+    const password = userValue.password;
+    console.log(password);
+    const inputValue = e.target.value;
+
+    let msg = '';
+    let flag = false;
+
+    if (password !== inputValue) {
+      msg = '위 패스워드와 동일하게 입력해 주세요.';
+    } else {
+      msg = '위와 동일한 패스워드입니다.';
+      flag = true;
+    }
+
+    // 상태값 변경 저장
+    saveInputState({
+      key: 'passwordCheck',
+      inputValue,
+      msg,
+      flag,
+    });
+  };
+
   return (
     <Container component="main" maxWidth="xs" style={{ margin: '200px auto' }}>
       <form noValidate>
@@ -188,8 +238,13 @@ const Join = () => {
               type="password"
               id="password"
               autoComplete="current-password"
+              onChange={passwordHandler}
             />
-            <span></span>
+            <span
+              style={correct.password ? { color: 'green' } : { color: 'red' }}
+            >
+              {message.password}
+            </span>
           </Grid>
 
           <Grid item xs={12}>
@@ -202,8 +257,15 @@ const Join = () => {
               type="password"
               id="password-check"
               autoComplete="check-password"
+              onChange={passwordCheckHandler}
             />
-            <span></span>
+            <span
+              style={
+                correct.passwordCheck ? { color: 'green' } : { color: 'red' }
+              }
+            >
+              {message.passwordCheck}
+            </span>
           </Grid>
 
           <Grid item xs={12}>
