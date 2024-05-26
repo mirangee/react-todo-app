@@ -18,7 +18,7 @@ const Login = () => {
       headers: { 'content-type': 'application/json' },
       body: JSON.stringify(loginInfo),
     })
-      .then((res) => res.text())
+      .then((res) => res.json())
       .then((data) => {
         console.log(data);
       })
