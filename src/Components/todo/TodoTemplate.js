@@ -19,11 +19,21 @@ const TodoTemplate = () => {
   자식 컴포넌트에서 전달받은 함수를 호출하면서 매개값으로 데이터를 전달
   */
 
-  const addTodo = (todoText) => {
+  const addTodo = async (todoText) => {
     const newTodo = {
       title: todoText,
     };
 
+    const res = await fetch(API_BASE_URL, {
+      method: 'POST',
+      headers: { 'content-type': 'application/json' },
+      body: JSON.stringify(newTodo),
+    });
+
+    const json = await res.json();
+    setTodos(json);
+
+    /*
     fetch(API_BASE_URL, {
       method: 'POST',
       headers: { 'content-type': 'application/json' },
@@ -40,6 +50,7 @@ const TodoTemplate = () => {
         setTodos(data.todos);
       });
     // .catch(()=>{}); 예외처리를 마지막에 할 수도 있음
+    */
   };
 
   // 할 일 삭제 처리 함수
